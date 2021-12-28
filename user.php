@@ -67,7 +67,7 @@ die ('SQL Error: ' . mysqli_error($conn));
       <div class="row">
         <div class="col text-center">
           <div class="card">
-            <img class="mx-auto d-block" width="500" src="/asscom/file/<?= $data['file'] ?>">
+            <img class="mx-auto d-block" width="500" src="/asscom/foto/<?= $data['file'] ?>">
             <h1>
               Uplod foto anda
             </h1>
@@ -87,7 +87,7 @@ die ('SQL Error: ' . mysqli_error($conn));
                 $file_tmp = $_FILES['file']['tmp_name'];	
                   if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
                       if($ukuran < 1044070){			
-                    move_uploaded_file($file_tmp, 'file/'.$nama);
+                    move_uploaded_file($file_tmp, 'foto/'.$nama);
                     $query = mysqli_query($conn,"UPDATE user SET file ='$nama' where kodeakses = '$kodeakses'");
                     if($query){
                       echo 'FILE BERHASIL DI UPLOAD';
