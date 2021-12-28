@@ -64,6 +64,7 @@
                             echo "<script>alert('password salah');</script>";
                         } else {
                             $_SESSION['log'] = true;
+                            $_SESSION['kodeakses'] = $kodeakses;
                             echo "<script>alert('login Berhasil');document.location.href='user.php';</script>";
                         }
                     } else {

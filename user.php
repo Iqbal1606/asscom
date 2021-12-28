@@ -1,11 +1,25 @@
 <?php
     session_start();
-    // return var_dump($_SESSION['log']);
     if (!isset($_SESSION['log'])){
         header("Location: login.php");
         exit;
     }
 ?>
+
+<?php
+include "koneksi.php";
+$kodeakses=$_SESSION['kodeakses'];
+$sql = "SELECT * FROM user where kodeakses = '$kodeakses'";
+
+$query = mysqli_query($conn, $sql);
+$data = mysqli_fetch_assoc($query);
+// return var_dump($data);
+
+if (!$query) {
+die ('SQL Error: ' . mysqli_error($conn));
+}
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -53,15 +67,51 @@
       <div class="row">
         <div class="col text-center">
           <div class="card">
-            <i class="fas fa-file-import fa-7x"></i>
+            <img class="mx-auto d-block" width="500" src="/asscom/file/<?= $data['file'] ?>">
+            <h1>
+              Uplod foto anda
+            </h1>
+              <form action="" method="post" enctype="multipart/form-data">
+                <input type="file" name="file"  class="fas fa-file-import fa-x">
+                <br>
+                <input type="submit" name="upload" value="Upload" class="fa-x">
+                <?php 
+                include 'koneksi.php';
+                if(isset($_POST['upload'])){
+                $ekstensi_diperbolehkan	= array('png','jpg');
+                $kodeakses=$_SESSION['kodeakses'];
+                $nama = $_FILES['file']['name'];
+                $x = explode('.', $nama);
+                $ekstensi = strtolower(end($x));
+                $ukuran	= $_FILES['file']['size'];
+                $file_tmp = $_FILES['file']['tmp_name'];	
+                  if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
+                      if($ukuran < 1044070){			
+                    move_uploaded_file($file_tmp, 'file/'.$nama);
+                    $query = mysqli_query($conn,"UPDATE user SET file ='$nama' where kodeakses = '$kodeakses'");
+                    if($query){
+                      echo 'FILE BERHASIL DI UPLOAD';
+                    }else{
+                      echo 'GAGAL MENGUPLOAD GAMBAR';
+                    }
+                      }else{
+                    echo 'UKURAN FILE TERLALU BESAR';
+                      }
+                      }else{
+                  echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
+                      }
+                  }
+                ?>
+ 
+              </form>
             <div class="card-body bg-warning">
-              <a href="login.php">
-              <button type="button" class="btn btn-primary btn-lg">Uplod Foto Anda</button>
-              </a>
-              <h4 class="card-text text">layanan yang di berikan pada menu ini antara lain:</h5>
-              <h5 class="card-text text">"tempat mebuat tugas kepada mahasiswa"</h5>
-              <h5 class="card-text text">"melihat mahasiswa yang sudah mengerjakan"</h5>
-              <h5 class="card-text text">"Melihat form pengumpulan"</h5>
+              <h1>
+              <?= $data['namauser'] ?>
+              </h1>
+              <h1>
+              <?= $data['emailuser'] ?>
+              </h1>
+              
             </div>
           </div>
         </div>
