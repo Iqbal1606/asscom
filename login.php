@@ -51,7 +51,7 @@
                     $password    = $_POST['passworduser'];
                     //var_dump($_POST);
                     //return false;
-                    $cek_user = mysqli_query($conn, "SELECT * FROM user WHERE kodeakses='$kodeakses'");
+                    $cek_user = mysqli_query($conn, "SELECT * FROM user WHERE kodeakses='$kodeakses' and passworduser='$password'");
                     
                     $row      = mysqli_num_rows($cek_user);
 

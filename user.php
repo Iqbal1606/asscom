@@ -1,7 +1,8 @@
 <?php
     session_start();
+    // return var_dump($_SESSION['log']);
     if (!isset($_SESSION['log'])){
-        header("Location: user.php");
+        header("Location: login.php");
         exit;
     }
 ?>
@@ -26,7 +27,7 @@
           <marquee direction="left"> <h4>SELAMAT DATANG DI MENU USER</h4></marquee>
             <div class="icon ml-4">
                 <h5>
-                    <a href="index.php" onclick="return confirm('yakin mau logout')"> <i class="fas fa-sign-out-alt me-3 data-bs-toggle="tooltip" title="sign-out"></i></a> 
+                    <a href="logout.php" onclick="return confirm('yakin mau logout')"> <i class="fas fa-sign-out-alt me-3 data-bs-toggle="tooltip" title="sign-out"></i></a> 
                 </h5>
             </div>
           </div>
