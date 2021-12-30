@@ -1,6 +1,6 @@
 <?php
     session_start();
-    if (!isset($_SESSION['log'])){
+    if (!isset($_SESSION['log'])) {
         header("Location: login.php");
         exit;
     }
@@ -16,7 +16,7 @@ $data = mysqli_fetch_assoc($query);
 // return var_dump($data);
 
 if (!$query) {
-die ('SQL Error: ' . mysqli_error($conn));
+    die('SQL Error: ' . mysqli_error($conn));
 }
 ?>
 
@@ -41,7 +41,7 @@ die ('SQL Error: ' . mysqli_error($conn));
           <marquee direction="left"> <h4>SELAMAT DATANG DI MENU USER</h4></marquee>
             <div class="icon ml-4">
                 <h5>
-                    <a href="logout.php" onclick="return confirm('yakin mau logout')"> <i class="fas fa-sign-out-alt me-3 data-bs-toggle="tooltip" title="sign-out"></i></a> 
+                    <a href="logout.php" onclick="return confirm('yakin mau logout')"> <i class="fas fa-sign-out-alt me-3 data-bs-toggle="tooltip" title="sign-out"></i></a>
                 </h5>
             </div>
           </div>
@@ -63,11 +63,11 @@ die ('SQL Error: ' . mysqli_error($conn));
           </div>
           <class class="col-md-10 p-2 pt-4">
               <h3><i class="fas fa-user me-2"></i>PROFIL</h3><hr class="bg-dark">
-              
+
       <div class="row">
         <div class="col text-center">
           <div class="card">
-            <img class="mx-auto d-block" width="500" src="/asscom/foto/<?= $data['file'] ?>">
+            <img class="mx-auto d-block" width="500" src="/foto/<?= $data['file'] ?>">
             <h1>
               Uplod foto anda
             </h1>
@@ -75,34 +75,34 @@ die ('SQL Error: ' . mysqli_error($conn));
                 <input type="file" name="file"  class="fas fa-file-import fa-x">
                 <br>
                 <input type="submit" name="upload" value="Upload" class="fa-x">
-                <?php 
+                <?php
                 include 'koneksi.php';
-                if(isset($_POST['upload'])){
-                $ekstensi_diperbolehkan	= array('png','jpg');
-                $kodeakses=$_SESSION['kodeakses'];
-                $nama = $_FILES['file']['name'];
-                $x = explode('.', $nama);
-                $ekstensi = strtolower(end($x));
-                $ukuran	= $_FILES['file']['size'];
-                $file_tmp = $_FILES['file']['tmp_name'];	
-                  if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
-                      if($ukuran < 1044070){			
-                    move_uploaded_file($file_tmp, 'foto/'.$nama);
-                    $query = mysqli_query($conn,"UPDATE user SET file ='$nama' where kodeakses = '$kodeakses'");
-                    if($query){
-                      echo 'FILE BERHASIL DI UPLOAD';
-                    }else{
-                      echo 'GAGAL MENGUPLOAD GAMBAR';
+                if (isset($_POST['upload'])) {
+                    $ekstensi_diperbolehkan	= array('png','jpg');
+                    $kodeakses=$_SESSION['kodeakses'];
+                    $nama = $_FILES['file']['name'];
+                    $x = explode('.', $nama);
+                    $ekstensi = strtolower(end($x));
+                    $ukuran	= $_FILES['file']['size'];
+                    $file_tmp = $_FILES['file']['tmp_name'];
+                    if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
+                        if ($ukuran < 1044070) {
+                            move_uploaded_file($file_tmp, 'foto/'.$nama);
+                            $query = mysqli_query($conn, "UPDATE user SET file ='$nama' where kodeakses = '$kodeakses'");
+                            if ($query) {
+                                echo 'FILE BERHASIL DI UPLOAD';
+                            } else {
+                                echo 'GAGAL MENGUPLOAD GAMBAR';
+                            }
+                        } else {
+                            echo 'UKURAN FILE TERLALU BESAR';
+                        }
+                    } else {
+                        echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
                     }
-                      }else{
-                    echo 'UKURAN FILE TERLALU BESAR';
-                      }
-                      }else{
-                  echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
-                      }
-                  }
+                }
                 ?>
- 
+
               </form>
             <div class="card-body bg-warning">
               <h1>
@@ -111,13 +111,13 @@ die ('SQL Error: ' . mysqli_error($conn));
               <h1>
               <?= $data['emailuser'] ?>
               </h1>
-              
+
             </div>
           </div>
         </div>
       </div>
 
-     
+
           </class>
       </class>
 

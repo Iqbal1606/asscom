@@ -5,15 +5,17 @@ $sql = "SELECT * FROM tugas";
 $query = mysqli_query($conn, $sql);
 
 if (!$query) {
-die ('SQL Error: ' . mysqli_error($conn));
+    die('SQL Error: ' . mysqli_error($conn));
 }
 
-if(isset($_GET['tugas_id'])){
-  echo "<h1> ini adalah id tugas dari metode get ".$_GET['tugas_id']."</h1>";
-}
+$data_tugas = "";
 
-if(isset($_POST['tugas_id'])){
-  echo "<h1> ini adalah id tugas dari metode post ".$_POST['tugas_id']."</h1>";
+if (isset($_GET['tugas_id'])) {
+    $id_tugas = $_GET['tugas_id'];
+    $sql_tugas = "SELECT * FROM tugas WHERE id_tugas='$id_tugas'";
+    $query_tugas = mysqli_query($conn, $sql_tugas);
+
+    $data_tugas = mysqli_fetch_assoc($query_tugas);
 }
 ?>
 <html lang="en">
@@ -36,7 +38,7 @@ if(isset($_POST['tugas_id'])){
           <marquee direction="left"> <h4>SELAMAT DATANG DI MENU MAHASISWA</h4></marquee>
             <div class="icon ml-4">
                 <h5>
-                    <a href="../logout.php" onclick="return confirm('yakin mau logout')"> <i class="fas fa-sign-out-alt me-3 data-bs-toggle="tooltip" title="sign-out"></i></a> 
+                    <a href="../logout.php" onclick="return confirm('yakin mau logout')"> <i class="fas fa-sign-out-alt me-3 data-bs-toggle="tooltip" title="sign-out"></i></a>
                 </h5>
             </div>
           </div>
@@ -61,40 +63,39 @@ if(isset($_POST['tugas_id'])){
                           <div class="col-20 text-center ">
                             <div class="card">
                               <div class="mb-3">
-                                <form method="post">
+                                <form method="get">
                                 <label for="disabledSelect" class="form-label">Silahkan pilih tugas anda</label>
                                 <select id="disabledSelect" name="tugas_id" class="form-select" required>
                                   <option value="">Memilih Tugas</option>
                                     <?php
                                       while ($data = mysqli_fetch_array($query)) {
-                                            ?>
+                                          ?>
                                                 <option value="<?php echo $data['id_tugas'] ?>"><?php echo $data['nama_tugas'] ?></option>
-                                                  
-                                    <?php } ?>
-                                  
+
+                                    <?php
+                                      } ?>
+
                                 </select>
                                 <br>
-                                <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-                               
-
+                                <button type="submit" class="btn btn-primary">Submit</button>
                                 </form>
                               </div>
-                            
+
                             </div>
                           </div>
                         </div>
-                      
-                
+
+                        <?php if ($data_tugas != ""): ?>
                           <div class="card-body bg-warning">
                             <table class="table table-striped">
                               <tr>
-                                <td>Id Tugas    =</td>
+                                <td>Id Tugas = <?=$data_tugas['id_tugas']?></td>
                               </tr>
                               <tr>
-                                <td>Nama_Tugas  =</td>
+                                <td>Nama_Tugas  = <?=$data_tugas['nama_tugas']?></td>
                               </tr>
                               <tr>
-                                <td>Nama Matkul =</td>
+                                <td>Nama Matkul = </td>
                               </tr>
                               <tr>
                                 <td>Deskripsi   =</td>
@@ -105,10 +106,11 @@ if(isset($_POST['tugas_id'])){
                               <tr>
                                 <td>Folder      =</td>
                               </tr>
-                              
+
                             </table>
 
-                          </div>      
+                          </div>
+                          <?php endif; ?>
                   </div>
 
                   <div class="col-md-12 p-S pt-4">
@@ -144,7 +146,7 @@ if(isset($_POST['tugas_id'])){
                         </div>
                     </div>
 
-                            
+
                   </div>
 
           </class>
