@@ -59,7 +59,9 @@ if (isset($_POST['login'])) {
             echo "<script>alert('password salah');</script>";
         } else {
             $_SESSION['log'] = true;
-            echo "<script>alert('login Berhasil');document.location.href='mahasiswa.php';</script>";
+            $_SESSION['usernamemhs'] = $usernamemhs;
+            
+            echo "<script>alert('login Berhasil');document.location.href='mahasiswa/mahasiswa.php';</script>";
         }
     } else {
        

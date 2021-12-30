@@ -107,7 +107,7 @@
                             if($ukuran < 1044070){			
                           move_uploaded_file($file_tmp, 'file/'.$nama);
                           $query = mysqli_query($conn,"INSERT INTO `tugas`(`id_tugas`, `nama_tugas`, `nama_matkul`, `deskripsi`, `deadline`, `folder`) VALUES 
-                          ('[$_POST[id_tugas]]','[$_POST[nama_tugas]]','[$_POST[nama_matkul]','[$_POST[deskripsi]]','[$_POST[deskripsi]]','[$nama]')");
+                          ('$_POST[id_tugas]','$_POST[nama_tugas]','$_POST[nama_matkul]','$_POST[deskripsi]','$_POST[deadline]','$nama')");
                          
                           if($query){
                             
