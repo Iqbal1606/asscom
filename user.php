@@ -59,6 +59,9 @@ if (!$query) {
                 <li class="nav-item">
                   <a class="nav-link text-white" href="pemberian_tugas.php"><i class="fas fa-newspaper me-2"></i>Pemberian Tugas</a><hr class="bg-secondary">
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link text-white" href="daftar_list_tugas.php"><i class="fas fa-newspaper me-2"></i>List Tugas Mahasiswa</a><hr class="bg-secondary">
+                </li>
               </ul>
           </div>
           <class class="col-md-10 p-2 pt-4">

@@ -1,4 +1,12 @@
 <?php
+date_default_timezone_set("Asia/Jakarta");
+    session_start();
+    if (!isset($_SESSION['log'])){
+        header("Location: ../loginmhs.php");
+        exit;
+    }
+?>
+<?php
 include "../koneksi.php";
 $sql = "SELECT * FROM tugas";
 
@@ -7,7 +15,7 @@ $query = mysqli_query($conn, $sql);
 if (!$query) {
     die('SQL Error: ' . mysqli_error($conn));
 }
-
+//parameter 
 $data_tugas = "";
 
 if (isset($_GET['tugas_id'])) {
@@ -95,16 +103,16 @@ if (isset($_GET['tugas_id'])) {
                                 <td>Nama_Tugas  = <?=$data_tugas['nama_tugas']?></td>
                               </tr>
                               <tr>
-                                <td>Nama Matkul = </td>
+                                <td>Nama Matkul = <?=$data_tugas['nama_matkul']?> </td>
                               </tr>
                               <tr>
-                                <td>Deskripsi   =</td>
+                                <td>Deskripsi   = <?=$data_tugas['deskripsi']?></td>
                               </tr>
                               <tr>
-                                <td>Deadline    =</td>
+                                <td>Deadline    = <?=$data_tugas['deadline']?></td>
                               </tr>
                               <tr>
-                                <td>Folder      =</td>
+                                <td>Folder      = <a href="/asscom/file/<?=$data_tugas['folder']?>"><?=$data_tugas['folder']?></a></td>
                               </tr>
 
                             </table>
@@ -123,13 +131,12 @@ if (isset($_GET['tugas_id'])) {
                                   <h6>Silahkan Upload Tugas Anda</h6>
                                   </div>
                                   <form action="" method="post" enctype="multipart/form-data" >
+                                  <input type="hidden" name="id_tugas" value="<?=$_GET['tugas_id']?>">
+                                  <input type="hidden" name="tgl_pengumpulan" value="<?=date ('Y-m-d H:i')?>">
+                                
                                     <div class="">
                                       <table>
-                                        <tr>
-                                          <td width="130">ID TUGAS</td>
-                                          <td><input class="form-control" type="text" name="id_tugas"></td>
-                                        </tr>
-
+                                     
                                         <tr>
                                           <td width="130">File Upload</td>
                                           <td><input class="form-control" type="file" name="file"></td>
@@ -138,6 +145,40 @@ if (isset($_GET['tugas_id'])) {
                                           <td></td>
                                           <td><input type="submit" value="Kirim" name="kirim"></td>
                                         </tr>
+                                        <?php
+                                        include "../koneksi.php";
+                                        if(isset($_POST['kirim'])){
+                                          $ekstensi_diperbolehkan	= array('pdf','jpg','docx');
+                                          $usernamemhs=$_SESSION['usernamemhs'];
+                                         
+                                          $nama = $_FILES['file']['name'];
+                                          $x = explode('.', $nama);
+                                          $ekstensi = strtolower(end($x));
+                                          $ukuran	= $_FILES['file']['size'];
+                                          $file_tmp = $_FILES['file']['tmp_name'];
+                                          if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
+                                            if($ukuran < 104407000000){			
+                                          move_uploaded_file($file_tmp, 'file/'.$nama);
+                                          $sql= "INSERT INTO `tugasmhs`( `id_tugas`, `usernamemhs`, `filetgsmhs`, `tanggalpengumpulan`) VALUES 
+                                          ('$_POST[id_tugas]','$usernamemhs','$nama','$_POST[tgl_pengumpulan]')";
+                                          
+                                          $query = mysqli_query($conn,$sql);
+                                          
+                                        if($query){
+                                         
+    
+                                              echo 'FILE BERHASIL DI SIMPAN';
+                                            }else{
+                                              echo 'GAGAL MENGUPLOAD FILE';
+                                            }
+                                              }else{
+                                            echo 'UKURAN FILE TERLALU BESAR';
+                                              }
+                                              }else{
+                                          echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
+                                              }
+                                          }
+                                        ?>
                                       </table>
                                     </div>
                                   </form>
