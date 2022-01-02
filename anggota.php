@@ -6,19 +6,28 @@ $db_name = 'asscom'; // Nama Database
 
 $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
 if (!$conn) {
-	die ('Gagal terhubung dengan MySQL: ' . mysqli_connect_error());	
+    die('Gagal terhubung dengan MySQL: ' . mysqli_connect_error());
 }
 
-$sql = 'SELECT * FROM tugas';
-$id_tugas   = $_GET['id_tugas'];
+// query mengambil semua data tugas
+$sql_data_tugas = 'SELECT * FROM tugas';
+$query_data_tugas = mysqli_query($conn, $sql_data_tugas);
 
-$sql="DELETE from tugas where id_tugas='$id_tugas'";
-		
-$query = mysqli_query($conn, $sql);
-
-if (!$query) {
-	die ('SQL Error: ' . mysqli_error($conn));
+if (!$query_data_tugas) {
+    die('SQL Error: ' . mysqli_error($conn));
 }
+
+if (isset($_GET['id_del'])) {
+    $id_tugas   = $_GET['id_del'];
+    $sql_delete_tugas="DELETE from tugas where id_tugas='$id_tugas'";
+
+    $query_delete_tugas = mysqli_query($conn, $sql_delete_tugas);
+    if (!$query_delete_tugas) {
+        die('SQL Error: ' . mysqli_error($conn));
+    }
+}
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -41,7 +50,7 @@ if (!$query) {
           <marquee direction="left"> <h4>SELAMAT DATANG DI MENU USER</h4></marquee>
             <div class="icon ml-4">
                 <h5>
-                    <a href="index.php"> <i class="fas fa-sign-out-alt me-3 data-bs-toggle="tooltip" title="sign-out"></i></a> 
+                    <a href="index.php"> <i class="fas fa-sign-out-alt me-3 data-bs-toggle="tooltip" title="sign-out"></i></a>
                 </h5>
             </div>
           </div>
@@ -62,7 +71,7 @@ if (!$query) {
                 <li class="nav-item">
                   <a class="nav-link text-white" href="daftar_list_tugas.php"><i class="fas fa-newspaper me-2"></i>List Tugas Mahasiswa</a><hr class="bg-secondary">
                 </li>
-              
+
               </ul>
           </div>
           <class class="col-md-10 p-2 pt-4">
@@ -80,8 +89,8 @@ if (!$query) {
                 </tr>
                 <?php
                 $no = 1;
-                while ($data = mysqli_fetch_array($query)) {
-                      ?>
+                while ($data = mysqli_fetch_array($query_data_tugas)) {
+                    ?>
                           <tr>
                               <th><?php echo $no++ ?></th>
                               <th><?php echo $data['nama_tugas'] ?></th>
@@ -89,12 +98,17 @@ if (!$query) {
                               <th><?php echo $data['deskripsi'] ?></th>
                               <th><?php echo $data['deadline'] ?></th>
                               <th><?php echo $data['folder'] ?></th>
-                              <th> <a href='<?php echo $data[''] ?>'>Delete</a></th>
+                              <th>
+                                <a href='anggota.php?id_del=<?php echo $data['id_tugas'] ?>'>
+                                  Delete
+                                </a>
+                              </th>
                           </tr>
-              <?php } ?>
+              <?php
+                } ?>
 
               </table>
-              
+
 
 
           </class>

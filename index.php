@@ -7,7 +7,7 @@
 
   <!-- CSS Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  
+
   <!-- CSS Awesome Icon -->
   <link rel="stylesheet" href="fowsome/fontawesome-free-5.15.4-web/fontawesome-free-5.15.4-web/css/all.min.css">
 
@@ -32,9 +32,9 @@
           </li>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#About">about</a>
-          </li> 
+          </li>
         </ul>
-       
+
       </div>
       <div class="collapse navbar-collapse text-right" id="navbarText">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -45,7 +45,7 @@
             <a class="nav-link" href="signup.php">sign in</a>
           </li>
         </ul>
-       
+
       </div>
     </div>
   </nav>
@@ -54,7 +54,7 @@
         <h3 class="display-1">Selamat Datang di Website Pengumpulan Tugas for Mahasiswa</h3>
         <h4 class="display-1">Selamat Belajar</h4>
         <h1 class="display-6">untuk lebih lanjut silahkan pilih menu dibawah ini</h1>
-        
+
         <div class="btn-group" role="group" aria-label="Basic checkbox    toggle button group">
           <a href="login.php">
             <button type="button" class="btn btn-primary btn-lg">User</button>
@@ -96,20 +96,20 @@
             </div>
         </div>
       </div>
-      
+
     </div>
   </div>
 
   <div class="container" >
         <div class="row p-2 mt-3 mb-3">
-        <h2 style="text-align: center" id="About"> ABOUT US </h2> 
+        <h2 style="text-align: center" id="About"> ABOUT US </h2>
         </div>
         <div class="row justify-content-around">
           <div class="col pb-3">
             <img src="gambar/3.png" alt="gambar" style="width: 700px;">
           </div>
           <div class="col pt-3">
-            <p>Asscom dapat membantu mahasiswa dalam pengumpulan tugas secara online 
+            <p>Asscom dapat membantu mahasiswa dalam pengumpulan tugas secara online
             selain itu pada aplikasi ini mahasiswa dapat melihat kumpulan tugas yang akan mereka kerjakan
           beserta time line pengumpulan tugas.</p>
 
@@ -125,7 +125,7 @@
       <!-- Footer -->
     <footer class="bg-light bg-dark text-light text-center text-lg-start">
         <!-- Copyright -->
-        <div class="text-center text-ligh p-3" style=" bg-dark">
+        <div class="text-center text-ligh p-3 bg-dark">
             © 2020 Copyright:
             <a class="text-light">Kelompok 1</a>
         </div>
@@ -133,13 +133,13 @@
     </footer>
     <!-- Akhir Footer -->
 
-    
+
 
   </div>
 
 
-  
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  
+
 </body>
 </html>
