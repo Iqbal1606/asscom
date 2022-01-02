@@ -20,6 +20,34 @@ if (!$query) {
 }
 ?>
 
+<?php
+                include 'koneksi.php';
+                if (isset($_POST['upload'])) {
+                    $ekstensi_diperbolehkan	= array('png','jpg');
+                    $kodeakses=$_SESSION['kodeakses'];
+                    $nama = $_FILES['file']['name'];
+                    $x = explode('.', $nama);
+                    $ekstensi = strtolower(end($x));
+                    $ukuran	= $_FILES['file']['size'];
+                    $file_tmp = $_FILES['file']['tmp_name'];
+                    if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
+                        if ($ukuran < 1044070) {
+                            move_uploaded_file($file_tmp, 'foto/'.$nama);
+                            $query = mysqli_query($conn, "UPDATE user SET file ='$nama' where kodeakses = '$kodeakses'");
+                            if ($query) {
+                                echo 'FILE BERHASIL DI UPLOAD';
+                            } else {
+                                echo 'GAGAL MENGUPLOAD GAMBAR';
+                            }
+                        } else {
+                            echo 'UKURAN FILE TERLALU BESAR';
+                        }
+                    } else {
+                        echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
+                    }
+                }
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -78,33 +106,7 @@ if (!$query) {
                 <input type="file" name="file"  class="fas fa-file-import fa-x">
                 <br>
                 <input type="submit" name="upload" value="Upload" class="fa-x">
-                <?php
-                include 'koneksi.php';
-                if (isset($_POST['upload'])) {
-                    $ekstensi_diperbolehkan	= array('png','jpg');
-                    $kodeakses=$_SESSION['kodeakses'];
-                    $nama = $_FILES['file']['name'];
-                    $x = explode('.', $nama);
-                    $ekstensi = strtolower(end($x));
-                    $ukuran	= $_FILES['file']['size'];
-                    $file_tmp = $_FILES['file']['tmp_name'];
-                    if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
-                        if ($ukuran < 1044070) {
-                            move_uploaded_file($file_tmp, 'foto/'.$nama);
-                            $query = mysqli_query($conn, "UPDATE user SET file ='$nama' where kodeakses = '$kodeakses'");
-                            if ($query) {
-                                echo 'FILE BERHASIL DI UPLOAD';
-                            } else {
-                                echo 'GAGAL MENGUPLOAD GAMBAR';
-                            }
-                        } else {
-                            echo 'UKURAN FILE TERLALU BESAR';
-                        }
-                    } else {
-                        echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
-                    }
-                }
-                ?>
+               
 
               </form>
             <div class="card-body bg-warning">

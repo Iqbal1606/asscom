@@ -61,27 +61,22 @@
               <div class="">
               <table>
                       <tr>
-                          <td width="130">1. ID TUGAS</td>
-                          <td><input type="text" name="id_tugas"></td>
-                      </tr>
-
-                      <tr>
-                          <td width="130">2. NAMA_TUGAS</td>
+                          <td width="130">1. NAMA_TUGAS</td>
                           <td><input type="text" name="nama_tugas"></td>
                       </tr>
 
                       <tr>
-                          <td width="130">3. NAMA_MATKUL</td>
+                          <td width="130">2. NAMA_MATKUL</td>
                           <td><input type="text" name="nama_matkul"></td>
                       </tr>
 
                       <tr>
-                          <td width="200">4. DESKRIPSI </td>
+                          <td width="200">3. DESKRIPSI </td>
                           <td><input type="text" name="deskripsi"></td>
                       </tr>
                      
                       <tr>
-                            <td width="130">5. Deadline</td>
+                            <td width="130">4. Deadline</td>
                             <td><input type="date" name="deadline"></td>
                       </tr>
 
@@ -109,8 +104,8 @@
                           if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
                             if($ukuran < 1044070){			
                           move_uploaded_file($file_tmp, 'file/'.$nama);
-                          $query = mysqli_query($conn,"INSERT INTO `tugas`(`id_tugas`, `nama_tugas`, `nama_matkul`, `deskripsi`, `deadline`, `folder`) VALUES 
-                          ('$_POST[id_tugas]','$_POST[nama_tugas]','$_POST[nama_matkul]','$_POST[deskripsi]','$_POST[deadline]','$nama')");
+                          $query = mysqli_query($conn,"INSERT INTO `tugas`(`nama_tugas`, `nama_matkul`, `deskripsi`, `deadline`, `folder`) VALUES 
+                          ('$_POST[nama_tugas]','$_POST[nama_matkul]','$_POST[deskripsi]','$_POST[deadline]','$nama')");
                          
                           if($query){
                             

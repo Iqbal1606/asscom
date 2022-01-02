@@ -10,7 +10,8 @@ if (!$conn) {
 }
 
 $sql = 'SELECT * 
-		FROM mahasiswa';
+		FROM tugas';
+$query="DELETE from tugas where id_tugas='$id_tugas'";
 		
 $query = mysqli_query($conn, $sql);
 
@@ -69,9 +70,12 @@ if (!$query) {
               <table class="table table-striped">
                 <tr>
                   <th>NO</th>
-                  <th>NIM</th>
-                  <th>NAMA</th>
-                  <th>EMAIL</th>
+                  <th>NAMA TUGAS</th>
+                  <th>NAMA MATKUL</th>
+                  <th>DESKRIPSI</th>
+                  <th>DEADLINE</th>
+                  <th>folder</th>
+                  <th>Update</th>
                 </tr>
                 <?php
                 $no = 1;
@@ -79,9 +83,12 @@ if (!$query) {
                       ?>
                           <tr>
                               <th><?php echo $no++ ?></th>
-                              <th><?php echo $data['nim'] ?></th>
-                              <th><?php echo $data['namamhs'] ?></th>
-                              <th><?php echo $data['emailmhs'] ?></th>
+                              <th><?php echo $data['nama_tugas'] ?></th>
+                              <th><?php echo $data['nama_matkul'] ?></th>
+                              <th><?php echo $data['deskripsi'] ?></th>
+                              <th><?php echo $data['deadline'] ?></th>
+                              <th><?php echo $data['folder'] ?></th>
+                              <th> <a href='delete.php?id_tugas=$data[id_tugas]'>Delete</a></th>
                           </tr>
               <?php } ?>
 
