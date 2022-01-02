@@ -9,9 +9,10 @@ if (!$conn) {
 	die ('Gagal terhubung dengan MySQL: ' . mysqli_connect_error());	
 }
 
-$sql = 'SELECT * 
-		FROM tugas';
-$query="DELETE from tugas where id_tugas='$id_tugas'";
+$sql = 'SELECT * FROM tugas';
+$id_tugas   = $_GET['id_tugas'];
+
+$sql="DELETE from tugas where id_tugas='$id_tugas'";
 		
 $query = mysqli_query($conn, $sql);
 
@@ -88,7 +89,7 @@ if (!$query) {
                               <th><?php echo $data['deskripsi'] ?></th>
                               <th><?php echo $data['deadline'] ?></th>
                               <th><?php echo $data['folder'] ?></th>
-                              <th> <a href='delete.php?id_tugas=$data[id_tugas]'>Delete</a></th>
+                              <th> <a href='<?php echo $data[''] ?>'>Delete</a></th>
                           </tr>
               <?php } ?>
 
