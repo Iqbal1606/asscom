@@ -9,6 +9,23 @@ if (!$conn) {
     die('Gagal terhubung dengan MySQL: ' . mysqli_connect_error());
 }
 
+if (isset($_GET['id_del'])) {
+  //ambil tugas
+  $id_tugas   = $_GET['id_del'];
+  $sql_row_tugas = "SELECT * FROM tugas where id_tugas='$id_tugas'";
+  $query_data = mysqli_query($conn, $sql_row_tugas);
+  $data = mysqli_fetch_assoc($query_data);
+  // return var_dump($data);
+  //delete tugas
+  unlink('file/'.$data['folder']);
+  $sql_delete_tugas="DELETE from tugas where id_tugas='$id_tugas'";	
+  $query_delete_tugas = mysqli_query($conn, $sql_delete_tugas);
+
+  if (!$query_delete_tugas) {
+      die('SQL Error: ' . mysqli_error($conn));
+  }
+}
+
 // query mengambil semua data tugas
 $sql_data_tugas = 'SELECT * FROM tugas';
 $query_data_tugas = mysqli_query($conn, $sql_data_tugas);
@@ -17,15 +34,7 @@ if (!$query_data_tugas) {
     die('SQL Error: ' . mysqli_error($conn));
 }
 
-if (isset($_GET['id_del'])) {
-    $id_tugas   = $_GET['id_del'];
-    $sql_delete_tugas="DELETE from tugas where id_tugas='$id_tugas'";
 
-    $query_delete_tugas = mysqli_query($conn, $sql_delete_tugas);
-    if (!$query_delete_tugas) {
-        die('SQL Error: ' . mysqli_error($conn));
-    }
-}
 
 
 ?>
@@ -63,7 +72,7 @@ if (isset($_GET['id_del'])) {
                   <a class="nav-link active text-white" aria-current="page" href="user.php"> <i class="fas fa-user me-2"></i>Profil</a><hr class="bg-secondary">
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-white" href="anggota.php"><i class="fas fa-users me-2"></i>Anggota</a><hr class="bg-secondary">
+                  <a class="nav-link text-white" href="daftar_penugasan.php"><i class="fas fa-users me-2"></i>Daftar Penugasan</a><hr class="bg-secondary">
                 </li>
                 <li class="nav-item">
                   <a class="nav-link text-white" href="pemberian_tugas.php"><i class="fas fa-newspaper me-2"></i>Pemberian Tugas</a><hr class="bg-secondary">
@@ -75,9 +84,9 @@ if (isset($_GET['id_del'])) {
               </ul>
           </div>
           <class class="col-md-10 p-2 pt-4">
-              <h3><i class="fas fa-users me-2"></i>ANGGOTA</h3><hr class="bg-dark">
-              <h5>DAFTAR ANGGOTA TERDAFTAR:</h5>
-              <table class="table table-striped">
+              <h3><i class="fas fa-users me-2"></i>Daftar Penugasan</h3><hr class="bg-dark">
+              <h5>Daftar Penugasan:</h5>
+              <table class="table table-striped bg-warning">
                 <tr>
                   <th>NO</th>
                   <th>NAMA TUGAS</th>
@@ -99,8 +108,11 @@ if (isset($_GET['id_del'])) {
                               <th><?php echo $data['deadline'] ?></th>
                               <th><?php echo $data['folder'] ?></th>
                               <th>
-                                <a href='anggota.php?id_del=<?php echo $data['id_tugas'] ?>'>
+                                <a href='daftar_penugasan.php?id_del=<?php echo $data['id_tugas'] ?>'>
                                   Delete
+                                </a>
+                                <a href='update.php?id_update=<?php echo $data['id_tugas'] ?>'>
+                                  Edit
                                 </a>
                               </th>
                           </tr>

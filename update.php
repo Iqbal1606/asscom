@@ -5,6 +5,55 @@
         exit;
     }
 ?>
+<?php
+include 'koneksi.php';
+if (isset($_GET['id_update'])) {
+$id_tugas   = $_GET['id_update'];
+$tugas      = mysqli_query($conn, "SELECT * FROM tugas WHERE id_tugas='$id_tugas'");
+$data       = mysqli_fetch_assoc($tugas);
+// return var_dump($data['folder']);
+// membuat function untuk set aktif radio button
+    function active_radio_button($value,$input){
+    // apabilan value dari radio sama dengan yang di input
+    $result =  $value==$input?'checked':'';
+    return $result;
+    }
+}
+
+if (isset($_POST['uplod'])) {
+
+$id_tugas = $_POST['id_tugas'];
+$nama_tugas  = $_POST['nama_tugas'];
+$nama_matkul           = $_POST['nama_matkul'];
+$deskripsi         = $_POST['deskripsi'];
+$deadline       = $_POST['deadline'];
+$folder = $data['folder'];
+if($_FILES['folder']['name']!=''){
+    $ekstensi_diperbolehkan	= array('pdf','jpg','png','docx');
+    $nama = $_FILES['folder']['name'];
+    $x = explode('.', $nama);
+    $ekstensi = strtolower(end($x));
+    $ukuran	= $_FILES['folder']['size'];
+    $file_tmp = $_FILES['folder']['tmp_name'];
+    if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
+      if($ukuran < 1044070000000){
+          $folder = $nama;
+          unlink('file/'.$data['folder']);			
+        move_uploaded_file($file_tmp, 'file/'.$nama);
+      }
+    }
+}
+// query SQL untuk insert data
+$sql_update="UPDATE tugas SET nama_tugas='$nama_tugas',nama_matkul='$nama_matkul',deskripsi='$deskripsi', deadline='$deadline',folder='$folder' where id_tugas='$id_tugas'";
+// return var_dump($sql_update);
+$query_update = mysqli_query($conn, $sql_update);
+// return var_dump($query_update);
+    if ($query_update) {
+    echo "<script>alert('Data yang anda Update sukses');window.location='daftar_penugasan.php'</script>";
+    }
+}
+?>
+
 
 <!doctype html>
 <html lang="en">
@@ -53,79 +102,54 @@
           </div>
           <class class="col-md-10 p-2 pt-4 ">
               <h3>
-                  <i class="fas fa-newspaper me-2"></i>Pemberian_tugas</h3><hr class="bg-dark">
+                  <i class="fas fa-newspaper me-2"></i>Menu Edit Tugas</h3><hr class="bg-dark">
               </h3>
-              <h4>silahkan mengisikan tugas</h4>
-              <form action="" method="post" enctype="multipart/form-data" >
-
+              <h4>Silahkan Ubah Tugas Anda</h4>
+            
+            <form action="" method="post" enctype="multipart/form-data" bg-warning >
+                <input type="hidden" value="<?php echo $data['id_tugas'];?>" name="id_tugas">
                 <div class="">
-                  <Table>
-             
+                    <table>
                       <tr>
                           <td width="130">1. NAMA_TUGAS</td>
-                          <td><input type="text" name="nama_tugas"></td>
+                          <td><input type="text" name="nama_tugas" value="<?php echo $data['nama_tugas'];?>"></td>
                       </tr>
 
                       <tr>
                           <td width="130">2. NAMA_MATKUL</td>
-                          <td><input type="text" name="nama_matkul"></td>
+                          <td><input type="text" name="nama_matkul" value="<?php echo $data['nama_matkul'];?>"></td>
                       </tr>
 
                       <tr>
                           <td width="200">3. DESKRIPSI </td>
-                          <td><input type="text" name="deskripsi"></td>
+                          <td><input type="text" name="deskripsi" value="<?php echo $data['deskripsi'];?>"></td>
                       </tr>
                      
                       <tr>
                             <td width="130">4. Deadline</td>
-                            <td><input type="date" name="deadline"></td>
+                            <td><input type="date" name="deadline" value="<?php echo $data['deadline'];?>"></td>
                       </tr>
-
                       <tr>
+                            
                             <td width="130">5. File Upload</td>
-                            <td><input type="file" name="file"></td>
+                            <td><input type="file" name="folder" ></td>
+                      </tr>
+                      <tr>
+                          <td>
+                              
+                          </td>
+                          <td>
+                          <a href="file/<?php echo $data['folder'];?>"><?php echo $data['folder'];?></a>
+                          </td>
                       </tr>
 
                       <tr>
                           <td></td>
                           <td><input type="submit" value="uplod" name="uplod"></td>
                       </tr>
-                  
-
-             
-                            <?php
-                            include "koneksi.php";
-                            if(isset($_POST['uplod'])){
-                                $ekstensi_diperbolehkan	= array('pdf','jpg','png','docx');
-                                $nama = $_FILES['file']['name'];
-                                $x = explode('.', $nama);
-                                $ekstensi = strtolower(end($x));
-                                $ukuran	= $_FILES['file']['size'];
-                                $file_tmp = $_FILES['file']['tmp_name'];
-                                if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
-                                  if($ukuran < 1044070){			
-                                move_uploaded_file($file_tmp, 'file/'.$nama);
-                                $query = mysqli_query($conn,"INSERT INTO `tugas`(`nama_tugas`, `nama_matkul`, `deskripsi`, `deadline`, `folder`) VALUES 
-                                ('$_POST[nama_tugas]','$_POST[nama_matkul]','$_POST[deskripsi]','$_POST[deadline]','$nama')");
-                              
-                                if($query){
-                                  
-                                  echo 'FILE BERHASIL DI SIMPAN';
-                                }else{
-                                  echo 'GAGAL MENGUPLOAD FILE';
-                                }
-                                  }else{
-                                echo 'UKURAN FILE TERLALU BESAR';
-                                  }
-                                  }else{
-                              echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
-                                  }
-                            }
-                            ?>
-                  </Table>
+                   </table>
                 </div>
-                
-              </form>
+            </form>
                         
               
 

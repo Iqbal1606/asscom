@@ -52,7 +52,7 @@ if (!$query) {
                   <a class="nav-link active text-white" aria-current="page" href="user.php"> <i class="fas fa-user me-2"></i>Profil</a><hr class="bg-secondary">
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-white" href="anggota.php"><i class="fas fa-users me-2"></i>Anggota</a><hr class="bg-secondary">
+                  <a class="nav-link text-white" href="daftar_penugasan.php"><i class="fas fa-users me-2"></i>Daftar Penugasan</a><hr class="bg-secondary">
                 </li>
                 <li class="nav-item">
                   <a class="nav-link text-white" href="pemberian_tugas.php"><i class="fas fa-newspaper me-2"></i>Pemberian Tugas</a><hr class="bg-secondary">
